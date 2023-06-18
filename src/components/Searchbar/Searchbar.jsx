@@ -49,4 +49,3 @@ class Searchbar extends Component{
 
 export default Searchbar;
 
-  {/* <span className={css.SearchFormButtonLabel}>Search</span> */}
