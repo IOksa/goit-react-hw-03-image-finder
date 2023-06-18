@@ -39,8 +39,7 @@ class ImageGalleryItem extends Component{
   render(){
     const {isModalOpen}=this.state;
     const {image:{webformatURL,tags,largeImageURL}}=this.props;
-    console.log("ImageGalleryItem=", this.props);
-    console.log("render isModalOpen=", isModalOpen);
+
     return (
       <>
         <li className={css.ImageGalleryItem} >

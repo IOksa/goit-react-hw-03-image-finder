@@ -6,6 +6,12 @@ let countPage=1;
 // let searchQuery="";
 let queryLimit=12;
 
+
+const errorAPIMessages = {
+	404: 'Sorry, there are no images matching your search query. Please try again.',
+	common: 'Something went wrong... Try again later.',
+};
+
 export const getFetchQueryImageGallery = async (searchQuery)=>{
     const params = new URLSearchParams({
         key: API_KEY,
@@ -18,19 +24,20 @@ export const getFetchQueryImageGallery = async (searchQuery)=>{
 
     });
 
-    const response = await axios.get(`${BASE_URL}?${params}`);
+        return await axios.get(`${BASE_URL}?${params}`, {
+            transformResponse: [
+                (data) => {
+                    const items = JSON.parse(data);
+                    console.log("axios=", items);
+                    return items.hits;
+                },
+            ],
+        })
+        .then((response) => response.data)
+        .catch ((err)=>{
+            throw Error(errorAPIMessages[err.response?.status || 'common']);
+        });
 
-    console.log('searchQuery=', searchQuery);
-    console.log('query=', `${BASE_URL}?${params}`);
-    console.log('params=', params);
-    // const markup=response.data.hits.map((image)=>
-    //     `<img class="photo-card__image" src="${image.webformatURL}" alt="${image.tags}" loading="lazy" id=${image.id}/>`).join('');
-
-    //     console.log('markup=', markup);
-    
-    return response.data.hits;
-    
-    // return await axios.get(`${BASE_URL}?key=${API_KEY}&q=${searchQuery}&image_type=photo&orientation=horizontal&safesearch=true`);
-   // https://pixabay.com/api/?q=cat&page=1&key=your_key&image_type=photo&orientation=horizontal&per_page=12
-
+       
 }
+

@@ -3,7 +3,8 @@ import * as API from 'services/api';
 import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Loader from './Loader/Loader';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -35,17 +36,30 @@ componentDidMount(){
   }
 
   getImageGallery = async (searchQuery) => {
-    try {
-      this.setState({ isLoading: true });
-      const images = await API.getFetchQueryImageGallery(Object.values(searchQuery));
-      this.setState({gallery: images});
-      console.log("images=",images);
-      console.log(this.state.gallery);
-    } catch (error) {
-      this.setState({error: true});
-      console.log(error);
-    }finally{
-      this.setState({isLoading: false });
+  
+    if(searchQuery.query!==''){
+      try {
+        this.setState({ isLoading: true });
+        const images = await API.getFetchQueryImageGallery(searchQuery.query);
+        if (images.length===0){
+          toast.error('Sorry, there are no images matching your search query. Please try again.');
+        }
+        else{
+          this.setState({gallery: images});
+          console.log("images=",images);
+          console.log(this.state.gallery);
+
+        }
+      } catch (error) {
+        this.setState({error: true});
+        toast.error(error);
+      
+      }finally{
+        this.setState({isLoading: false });
+      }
+    }
+    else{
+      toast.error('Empty search input');
     }
   };
 
@@ -53,9 +67,10 @@ componentDidMount(){
 
   render(){
     const { gallery, isLoading, error } = this.state;
-    console.log("render gallery=", gallery);
+
     return(
       <>
+      <ToastContainer autoClose="3000" theme="colored"/>
       <Searchbar onSubmit={this.getImageGallery}/>
       {isLoading && <Loader/>}
       {gallery && !isLoading && <ImageGallery gallery={gallery}/>}
