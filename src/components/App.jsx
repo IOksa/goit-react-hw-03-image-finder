@@ -3,7 +3,7 @@ import * as API from 'services/api';
 import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Loader from './Loader/Loader';
-import Modal from './Modal/Modal';
+
 
 
 
@@ -15,22 +15,26 @@ export class App extends Component{
   };
 
 
-  componentDidMount(){
-    // try {
-    //   this.setState({ isLoading: true });
-    //   const gallery = await API.getFetchQueryImageGallery();
-    //   console.log(gallery);
-    //   this.setState({ gallery, isLoading: false });
-    // } catch (error) {
-    //   this.setState({ error: true, isLoading: false });
-    //   console.log(error);
+componentDidMount(){
+    // console.log("componentDidMount");
+    // console.log("componentDidMount this.state.query", this.state.query);
+    // if(this.state.query){
+    //   try {
+    //     this.setState({ isLoading: true });
+    //     const images = await API.getFetchQueryImageGallery(this.state.query);
+    //     this.setState({gallery: images});
+    //     console.log("images=",images);
+    //     console.log(this.state.gallery);
+    //   } catch (error) {
+    //     this.setState({error: true});
+    //     console.log(error);
+    //   }finally{
+    //     this.setState({isLoading: false });
+    //   }
     // }
-
-    console.log("componentDidMount gallery=", this.state.gallery);
   }
 
   getImageGallery = async (searchQuery) => {
-   
     try {
       this.setState({ isLoading: true });
       const images = await API.getFetchQueryImageGallery(Object.values(searchQuery));
@@ -43,8 +47,9 @@ export class App extends Component{
     }finally{
       this.setState({isLoading: false });
     }
-    
   };
+
+
 
   render(){
     const { gallery, isLoading, error } = this.state;
@@ -54,7 +59,7 @@ export class App extends Component{
       <Searchbar onSubmit={this.getImageGallery}/>
       {isLoading && <Loader/>}
       {gallery && !isLoading && <ImageGallery gallery={gallery}/>}
-      {/* <Modal gallery={gallery}/> */}
+      
       </>
     );
   }
