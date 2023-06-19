@@ -113,7 +113,7 @@ export class App extends Component{
       <Searchbar onSubmit={this.getFirstImageGallery}/>
       {isLoading && <Loader/>}
       {gallery.length!==0 && !isLoading && <ImageGallery gallery={gallery}/>}
-      {gallery.length!==0 && !isLoading && isLoadButton && <Button onClick={this.onClickLoadMore}/>}
+      {gallery.length!==0 && !isLoading && isLoadButton && <Button onClickLoadMore={this.onClickLoadMore}/>}
       
       </>
     );

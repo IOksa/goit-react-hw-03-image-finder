@@ -49,7 +49,7 @@ class ImageGalleryItem extends Component{
         <Modal
           largeImageURL={largeImageURL}
           tags={tags}
-          onClose={this.onCloseModal}
+          onCloseModal={this.onCloseModal}
           onBackDropClick={this.onBackdropClick}
         />}
       </>

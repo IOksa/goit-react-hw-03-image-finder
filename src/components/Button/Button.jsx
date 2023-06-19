@@ -1,8 +1,10 @@
+import PropTypes from 'prop-types';
+
 import css from './Button.module.css';
 
-const Button = ({onClick})=>(
+const Button = ({onClickLoadMore})=>(
     <div className={css.ButtonThumb}>
-        <button hidden type="button" className={css.Button} onClick={onClick}>Load more</button>
+        <button hidden type="button" className={css.Button} onClick={onClickLoadMore}>Load more</button>
     </div>
     
     
@@ -11,3 +13,7 @@ const Button = ({onClick})=>(
 
 
 export default Button;
+
+Button.propTypes={
+    onClickLoadMore: PropTypes.func.isRequired,
+}; 

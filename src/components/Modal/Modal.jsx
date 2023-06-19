@@ -1,11 +1,12 @@
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import css from './Modal.module.css';
 
-const Modal=({largeImageURL,tags, onClose, onBackDropClick})=>{
+const Modal=({largeImageURL,tags, onCloseModal, onBackDropClick})=>{
     return ReactDOM.createPortal(
         <div className={css.Overlay} onClick={onBackDropClick}>
             <div className={css.Modal}>
-                <img src={largeImageURL} alt={tags} onClick={onClose} width="800" />
+                <img src={largeImageURL} alt={tags} onClick={onCloseModal} width="800" />
             </div>
         </div>,
         document.querySelector("#popup-root")
@@ -18,4 +19,11 @@ const Modal=({largeImageURL,tags, onClose, onBackDropClick})=>{
 export default Modal;
 
 
+Modal.propTypes={
+    largeImageURL: PropTypes.string.isRequired,
+    tags:  PropTypes.string.isRequired,
+  
+    onCloseModal: PropTypes.func.isRequired,
+    onBackDropClick: PropTypes.func.isRequired,
+}; 
 
