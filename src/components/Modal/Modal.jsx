@@ -4,7 +4,12 @@ import css from './Modal.module.css';
 
 const Modal=({largeImageURL,tags, onCloseModal, onBackDropClick})=>{
     return ReactDOM.createPortal(
-        <div className={css.Overlay} onClick={onBackDropClick}>
+        <div className={css.Overlay} onClick={
+            (event) =>{
+                console.log('onBackdropClick=', event);
+                if (event.currentTarget === event.target) {
+                    this.onCloseModal();
+                }}}>
             <div className={css.Modal}>
                 <img src={largeImageURL} alt={tags} onClick={onCloseModal} width="800" />
             </div>
@@ -24,6 +29,6 @@ Modal.propTypes={
     tags:  PropTypes.string.isRequired,
   
     onCloseModal: PropTypes.func.isRequired,
-    onBackDropClick: PropTypes.func.isRequired,
+   // onBackDropClick: PropTypes.func.isRequired,
 }; 
 

@@ -29,12 +29,12 @@ class ImageGalleryItem extends Component{
     }
   };
 
-  onBackdropClick=(event) =>{
-    console.log('onBackdropClick=', event);
-    if (event.currentTarget === event.target) {
-        this.onCloseModal();
-    }
-}
+  // onBackdropClick=(event) =>{
+  //   console.log('onBackdropClick=', event);
+  //   if (event.currentTarget === event.target) {
+  //       this.onCloseModal();
+  //   }
+  // }
 
   render(){
     const {isModalOpen}=this.state;
