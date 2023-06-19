@@ -8,6 +8,7 @@ class ImageGalleryItem extends Component{
        
   };
 
+  
   onOpenModal = () => {
 		this.setState({ isModalOpen: true });
     window.addEventListener('keydown', this.onEscKeyPress);
@@ -36,13 +37,26 @@ class ImageGalleryItem extends Component{
   //   }
   // }
 
+  scrollToBottom = () => {
+    this.messagesEnd.scrollIntoView({behavior: "smooth" });
+  
+  }
+  
+  componentDidMount() {
+    this.scrollToBottom();
+  }
+  
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+
   render(){
     const {isModalOpen}=this.state;
     const {image:{webformatURL,tags,largeImageURL}}=this.props;
 
     return (
       <>
-        <li className={css.ImageGalleryItem} >
+        <li className={css.ImageGalleryItem} ref={(el) => { this.messagesEnd = el; }}>
           <img src={webformatURL} alt={tags} loading="lazy" className={css.ImageGalleryItemImage} onClick={this.onOpenModal}/>
         </li>
         {isModalOpen && 
@@ -52,6 +66,7 @@ class ImageGalleryItem extends Component{
           onCloseModal={this.onCloseModal}
           onBackDropClick={this.onBackdropClick}
         />}
+      
       </>
       
       );
